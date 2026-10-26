@@ -261,6 +261,7 @@
 
 ---
 
+
 <br />
 <br />
 
@@ -299,6 +300,173 @@
 <br />
 
 <b><u>Solution:</u></b>  The user created in the previous ticket (tstark) was reassigned to a project revamping the production webpage, so I added the account to the support group with ipa group-add-member. The command reported one member added, and tstark appears in the support group's Member users list in the output. I then ran ipa group-show tstark to confirm the account's own user group exists in FreeIPA.
+
+<br />
+<br />
+
+<p align="right"><a href="#top">⬆ Back to top</a></p>
+
+---
+
+
+<br />
+<br />
+
+<a name="ticket-23"></a>
+<h1>Ticket #23 — Configure FreeIPA Client on the Stage VM</h1>
+
+<h2>Languages and Utilities Used</h2>
+- <b>Bash</b>
+- <b>ipa-client-install</b>
+- <b>SSH (ssh-keygen, ssh-copy-id)</b>
+- <b>Ansible</b>
+- <b>GitLab</b>
+- <b>vi</b>
+
+<h2>Environments Used</h2>
+- <b>CentOS Stream 9</b>
+- <b>VMware vSphere (VM console)</b>
+- <b>FreeIPA (procore.dev)</b>
+<br />
+<h2>Project walk-through:</h2>
+
+**Task:** All new servers must be enrolled in our IPA server. Enroll the staging server that was just created.
+
+**Objective:** Gain skills in integrating Linux systems with centralized identity management.
+
+**Requirements:**
+- VM: stage-web server
+- FreeIPA installed
+- Passwordless authentication: dev-ansible <-> stage-web, and stage-web <-> GitLab
+- Successful Ansible ping testing
+
+**Information:**
+- Create a stage group in the inventory file on the Ansible server
+- Add the stage-web server to the stage group
+- Add the stage-web server to the Ansible server's local DNS file (/etc/hosts)
+- Generate SSH keys on stage-web and configure SSH connections with GitLab
+
+<br />
+<br />
+<br />
+<p align="center">
+<b>Enrolling stage-web in FreeIPA with ipa-client-install:</b>
+<img width="1006" height="806" alt="image" src="https://github.com/user-attachments/assets/af4a85a4-cfb5-4040-9284-0970e09bf863" />
+
+
+
+</p>
+
+<br />
+<br />
+<br />
+
+<p align="center">
+<b>Generating SSH keys on stage-web and copying the key to dev-ansible:</b>
+<img width="972" height="828" alt="image" src="https://github.com/user-attachments/assets/f71efd9e-6e5c-4fb8-a6dd-974689d5007a" />
+
+
+
+</p>
+
+<br />
+<br />
+<br />
+
+<p align="center">
+<b>Passwordless SSH from dev-ansible to stage-web:</b>
+<img width="974" height="739" alt="image" src="https://github.com/user-attachments/assets/d26234db-72be-4b99-90bf-e148d25eb4ed" />
+
+
+
+</p>
+
+<br />
+<br />
+<br />
+
+<p align="center">
+<b>Displaying the stage-web public key:</b>
+<img width="980" height="292" alt="image" src="https://github.com/user-attachments/assets/d616fc29-97c4-4008-b1ac-84a9c1ccd160" />
+
+
+
+</p>
+
+<br />
+<br />
+<br />
+
+<p align="center">
+<b>Opening the SSH keys page in GitLab:</b>
+<img width="1266" height="402" alt="image" src="https://github.com/user-attachments/assets/4b7995b1-422c-4396-ab64-0a0a936952de" />
+
+
+
+</p>
+
+<br />
+<br />
+<br />
+
+<p align="center">
+<b>Adding the stage-web public key to GitLab:</b>
+<img width="1050" height="530" alt="image" src="https://github.com/user-attachments/assets/22583a97-b997-4dd8-9be6-e401cc1a40d8" />
+
+
+
+</p>
+
+<br />
+<br />
+<br />
+
+<p align="center">
+<b>Confirming the new key in GitLab:</b>
+<img width="1305" height="396" alt="image" src="https://github.com/user-attachments/assets/ef02401e-63c9-4080-a189-21386ad13061" />
+
+
+
+</p>
+
+<br />
+<br />
+<br />
+
+<p align="center">
+<b>Adding stage-web to the dev-ansible local hosts file:</b>
+<img width="888" height="631" alt="image" src="https://github.com/user-attachments/assets/2d787c3f-428d-434f-ba82-0d1e93f6f5e4" />
+
+
+
+</p>
+
+<br />
+<br />
+<br />
+
+<p align="center">
+<b>Creating the stage group in the Ansible inventory:</b><img width="870" height="549" alt="image" src="https://github.com/user-attachments/assets/f5faadad-c561-4916-ad9e-1f1c4f123944" />
+
+
+
+</p>
+
+<br />
+<br />
+<br />
+
+<p align="center">
+<b>Successful Ansible ping test:</b>
+<img width="962" height="243" alt="image" src="https://github.com/user-attachments/assets/a2dfe4ca-55a0-489d-a552-e3386a9ce347" />
+
+
+
+</p>
+
+<br />
+
+<b><u>Solution:</u></b>  I enrolled the stage-web server in FreeIPA with ipa-client-install --mkhomedir, supplying the procore.dev domain and my IPA credentials, and the installation completed successfully. For passwordless access, I generated SSH keys on stage-web and copied the public key to dev-ansible with ssh-copy-id, then cleared the old host key entries and copied the dev-ansible key to stage-web so the connection works in both directions. I added the stage-web public key to my GitLab account under SSH keys to configure the GitLab connection. On dev-ansible, I added stage-web to the local /etc/hosts file and created a stage group containing the server in the Ansible inventory. An Ansible ping against that group returned SUCCESS and pong. Ansible printed a warning about characters in the group name, but it did not prevent the test from passing.
 
 <br />
 <br />
