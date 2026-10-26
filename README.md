@@ -189,3 +189,77 @@
 
 <br />
 <br />
+
+<a name="ticket-6"></a>
+<h1>Ticket #6 — Add User to FreeIPA</h1>
+
+<h2>Languages and Utilities Used</h2>
+- <b>Bash</b>
+- <b>FreeIPA command line (ipa)</b>
+- <b>usermod</b>
+- <b>userdel</b>
+
+<h2>Environments Used</h2>
+- <b>CentOS Stream 9</b>
+- <b>VMware vSphere (VM console)</b>
+- <b>FreeIPA (procore.dev)</b>
+<br />
+<h2>Project walk-through:</h2>
+
+**Task:** Create a FreeIPA user for a newly hired developer, add the user to the webmasters group, and set a temporary password as documented in the ticket.
+
+**Objective:** Strengthen skills in centralized user and group management with FreeIPA.
+
+**Requirements:**
+- FreeIPA user created
+- Group: webmasters
+- Password set and documented
+
+<br />
+<br />
+<br />
+<p align="center">
+<b>Initial attempt with a local account, checked against the FreeIPA group:</b>
+<img width="1512" height="387" alt="image" src="https://github.com/user-attachments/assets/d7c30e30-0243-460c-8bd2-8de99229fbd8" />
+
+
+
+</p>
+
+<br />
+<br />
+<br />
+
+<p align="center">
+<b>Creating the FreeIPA user tstark:</b>
+<img width="1036" height="513" alt="image" src="https://github.com/user-attachments/assets/7d390ff0-ff18-44c0-b722-c4ea8aaec1bd" />
+
+
+
+</p>
+
+<br />
+<br />
+<br />
+
+<p align="center">
+<b>Adding tstark to the webmasters group and verifying membership:</b>
+<img width="883" height="433" alt="image" src="https://github.com/user-attachments/assets/a0c0723a-9c74-4b34-a1df-67ad30adab37" />
+
+
+
+</p>
+
+<br />
+
+<b><u>Solution:</u></b>  I created a new FreeIPA account (tstark) for the newly hired developer, Tony Stark, with ipa user-add and set a temporary password per the ticket requirements. My first attempt used a local account with usermod, but the webmasters group is managed in FreeIPA, so the local change had no effect on the directory group. I removed the local account and worked in FreeIPA instead. I then added tstark to the webmasters group with ipa group-add-member and confirmed membership with ipa group-show, where tstark appears under Member users.
+
+<br />
+<br />
+
+<p align="right"><a href="#top">⬆ Back to top</a></p>
+
+---
+
+<br />
+<br />
