@@ -480,6 +480,64 @@
 
 
 
+<a name="ticket-44"></a>
+<h1>Ticket #44 — List All FreeIPA Users and Delete a User</h1>
+
+<h2>Languages and Utilities Used</h2>
+- <b>Bash</b>
+- <b>FreeIPA command line (ipa)</b>
+- <b>tee</b>
+
+<h2>Environments Used</h2>
+- <b>CentOS Stream 9</b>
+- <b>VMware vSphere (VM console)</b>
+- <b>FreeIPA (procore.dev)</b>
+<br />
+<h2>Project walk-through:</h2>
+
+**Task:** The administration requested a detailed list of all users registered on the FreeIPA server. Generate the list using IPA commands and redirect the output to a file.
+
+**Objective:** Master centralized authentication and streamline user and group management using FreeIPA.
+
+**Requirements:**
+- VM: dev-app
+- Delete the FreeIPA user created in Ticket #6 (via an IPA command)
+- Path to the redirected output file (FreeIPA users)
+
+**Additional information:**
+- The HR department terminated the user created in Ticket #6
+- Delete that user with an IPA command and capture the result
+- Provide the file containing the list of users
+
+<br />
+<br />
+<br />
+<p align="center">
+<b>Generating the list of all FreeIPA users and saving it to a file:</b>
+<img width="879" height="257" alt="image" src="https://github.com/user-attachments/assets/65de4a11-9619-4c7d-a73e-ef111b55a421" />
 
 
 
+</p>
+
+<br />
+<br />
+<br />
+
+<p align="center">
+<b>Deleting the Ticket #6 user and confirming the result:</b>
+<img width="698" height="207" alt="image" src="https://github.com/user-attachments/assets/e5e14142-c1fc-43f9-b8ba-d57fc7bd95fe" />
+
+
+</p>
+
+<br />
+
+<b><u>Solution:</u></b>  I generated the list of all users registered on the FreeIPA server with ipa user-find --all --raw and piped the output through tee, which displayed it and saved it to a file in my home directory. The command returned 359 entries. Because the HR department terminated the user created in Ticket #6, I then deleted that account (tstark) with ipa user-del. To confirm the result, I ran ipa user-show on the same account, and FreeIPA returned a "user not found" error, showing the account no longer exists.
+
+<br />
+<br />
+
+<p align="right"><a href="#top">⬆ Back to top</a></p>
+
+---
