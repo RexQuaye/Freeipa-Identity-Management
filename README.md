@@ -263,3 +263,55 @@
 
 <br />
 <br />
+
+<a name="ticket-7"></a>
+<h1>Ticket #7 — Add User to Group Using FreeIPA</h1>
+
+<h2>Languages and Utilities Used</h2>
+- <b>Bash</b>
+- <b>FreeIPA command line (ipa)</b>
+
+<h2>Environments Used</h2>
+- <b>CentOS Stream 9</b>
+- <b>VMware vSphere (VM console)</b>
+- <b>FreeIPA (procore.dev)</b>
+<br />
+<h2>Project walk-through:</h2>
+
+**Task:** The previously added user was reassigned to support a webpage revamp project. Add this user to the support group.
+
+**Objective:** Strengthen skills in centralized user and group management with FreeIPA.
+
+**Requirements:**
+- FreeIPA group: support
+
+<br />
+<br />
+<br />
+<p align="center">
+<b>Adding tstark to the support group and confirming the result:</b>
+<img width="995" height="431" alt="image" src="https://github.com/user-attachments/assets/895d566f-5c7e-4731-8f0a-ca44a02e833e" />
+
+
+
+</p>
+
+<br />
+
+<b><u>Solution:</u></b>  The user created in the previous ticket (tstark) was reassigned to a project revamping the production webpage, so I added the account to the support group with ipa group-add-member. The command reported one member added, and tstark appears in the support group's Member users list in the output. I then ran ipa group-show tstark to confirm the account's own user group exists in FreeIPA.
+
+<br />
+<br />
+
+<p align="right"><a href="#top">⬆ Back to top</a></p>
+
+---
+
+<br />
+<br />
+
+
+
+
+
+
